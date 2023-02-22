@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "555aef0c-900b-4286-a843-93b67b96c2ae",
+		"name": "Device",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/device",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create device",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vendor\": \"dtest5\",\n    \"status\": \"online\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/device",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"device"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add device to gateway",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"deviceId\": \"63ed79004585d67f3b127ec0\",\n    \"gatewayId\": \"63ed79574585d67f3b127ec3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/device/addToGateway",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"device",
+						"addToGateway"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete device from gateway",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/device/63ed79004585d67f3b127ec0/gateway/63ed79574585d67f3b127ec3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"device",
+						"63ed79004585d67f3b127ec0",
+						"gateway",
+						"63ed79574585d67f3b127ec3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get single device",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/device/data/63ed79004585d67f3b127ec0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"device",
+						"data",
+						"63ed79004585d67f3b127ec0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get unconnected devices",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

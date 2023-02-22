@@ -1,0 +1,13 @@
+.GetGatewayData {
+    background-color: #282c34;
+    height: 100vh;
+    display: flex;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+.datagrid{
+    width: 100%!important;
+    background-color: white!important;
+    color: #282c34!important;
+    padding-left: 1rem;
+}

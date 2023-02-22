@@ -1,0 +1,13 @@
+version: "3"
+services:
+    frontend:
+        container_name: frontend
+        image: frontend
+        restart: always
+        build: .
+        ports:
+          - "5000:5000"
+        env_file:
+          - ./.env
+        environment:
+          - NODE_ENV=dev
