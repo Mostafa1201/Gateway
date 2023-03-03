@@ -1,13 +1,10 @@
 name: Development
 
 on:
+  push:
+    branches: [master]
   pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
-  workflow_call:
+    branches: [master]
 
 jobs:
   test:
