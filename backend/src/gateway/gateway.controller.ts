@@ -1,35 +1,55 @@
-import { Controller, Get, Post, Body, Param, Delete, Res, HttpStatus, Put, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Res,
+  HttpStatus,
+  Put,
+} from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
 import { UpdateGatewayDto } from './dto/update-gateway.dto';
-import { Constants } from "../utils/constants";
+import { Constants } from '../utils/constants';
 
 @Controller('gateway')
 export class GatewayController {
   constructor(private readonly gatewayService: GatewayService) {}
 
   @Post()
-   async createGateway(@Res() response, @Body() createGatewayDto: CreateGatewayDto) {
+  async createGateway(
+    @Res() response,
+    @Body() createGatewayDto: CreateGatewayDto,
+  ) {
     try {
-      const newGateway = await this.gatewayService.createGateway(createGatewayDto);
+      const newGateway = await this.gatewayService.createGateway(
+        createGatewayDto,
+      );
       return response.status(HttpStatus.CREATED).json({
         message: Constants.API_RESPONSE_MESSAGES.GATEWAY_CREATED_SUCCESSFULLY,
-        newGateway
+        newGateway,
       });
-    } 
-    catch (err) {
+    } catch (err) {
       return response.status(err.status).json(err.response);
     }
   }
-  
+
   @Put('/:id')
-  async updateGateway(@Res() response,@Param('id') gatewayId: string,
-  @Body() updateGatewayDto: UpdateGatewayDto) {
+  async updateGateway(
+    @Res() response,
+    @Param('id') gatewayId: string,
+    @Body() updateGatewayDto: UpdateGatewayDto,
+  ) {
     try {
-      const gateway = await this.gatewayService.updateGateway(gatewayId, updateGatewayDto);
+      const gateway = await this.gatewayService.updateGateway(
+        gatewayId,
+        updateGatewayDto,
+      );
       return response.status(HttpStatus.OK).json({
         message: Constants.API_RESPONSE_MESSAGES.GATEWAY_UPDATED_SUCCESSFULLY,
-        gateway
+        gateway,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);
@@ -42,7 +62,7 @@ export class GatewayController {
       const gateways = await this.gatewayService.getAllGateways();
       return response.status(HttpStatus.OK).json({
         message: Constants.API_RESPONSE_MESSAGES.GATEWAYS_FOUND_SUCCESSFULLY,
-        gateways
+        gateways,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);
@@ -52,11 +72,11 @@ export class GatewayController {
   @Get('/:id')
   async getGateway(@Res() response, @Param('id') gatewayId: string) {
     try {
-        const gateway = await this.gatewayService.getGateway(gatewayId);
-        return response.status(HttpStatus.OK).json({
-          message: Constants.API_RESPONSE_MESSAGES.GATEWAY_FOUND_SUCCESSFULLY,
-          gateway
-        });
+      const gateway = await this.gatewayService.getGateway(gatewayId);
+      return response.status(HttpStatus.OK).json({
+        message: Constants.API_RESPONSE_MESSAGES.GATEWAY_FOUND_SUCCESSFULLY,
+        gateway,
+      });
     } catch (err) {
       return response.status(err.status).json(err.response);
     }
@@ -68,7 +88,7 @@ export class GatewayController {
       const deletedGateway = await this.gatewayService.deleteGateway(gatewayId);
       return response.status(HttpStatus.OK).json({
         message: Constants.API_RESPONSE_MESSAGES.GATEWAY_DELETED_SUCCESSFULLY,
-        deletedGateway
+        deletedGateway,
       });
     } catch (err) {
       return response.status(err.status).json(err.response);

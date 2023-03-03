@@ -8,9 +8,9 @@ import { DeviceModule } from '../device/device.module';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Gateway.name, schema: GatewaySchema }]),
-    DeviceModule
+    DeviceModule,
   ],
   controllers: [GatewayController],
-  providers: [GatewayService]
+  providers: [GatewayService],
 })
 export class GatewayModule {}

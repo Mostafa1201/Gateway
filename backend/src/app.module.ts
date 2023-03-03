@@ -8,10 +8,12 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ 
+    ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(`mongodb://${process.env.MONGO_URI}/${process.env.MONGO_DB}`),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.MONGO_URI}/${process.env.MONGO_DB}`,
+    ),
     GatewayModule,
     DeviceModule,
   ],

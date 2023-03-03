@@ -1,16 +1,15 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { MongoMemoryServer } from "mongodb-memory-server";
-import { Connection, connect, Model } from "mongoose";
-import { getModelToken } from "@nestjs/mongoose";
-import { INestApplication, Res } from "@nestjs/common";
-import { Device, DeviceSchema } from "../device/entities/device.entity";
-import { DeviceService } from "../device/device.service";
+import { Test, TestingModule } from '@nestjs/testing';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection, connect, Model } from 'mongoose';
+import { getModelToken } from '@nestjs/mongoose';
+import { INestApplication } from '@nestjs/common';
+import { Device, DeviceSchema } from '../device/entities/device.entity';
+import { DeviceService } from '../device/device.service';
 import request from 'supertest';
-import { DeviceController } from "./device.controller";
-import { Constants } from "../utils/constants";
+import { DeviceController } from './device.controller';
+import { Constants } from '../utils/constants';
 
-describe("DeviceController", () => {
-  let deviceController: DeviceController;
+describe('DeviceController', () => {
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
   let deviceModel: Model<Device>;
@@ -25,12 +24,12 @@ describe("DeviceController", () => {
       controllers: [DeviceController],
       providers: [
         DeviceService,
-        {provide: getModelToken(Device.name), useValue: deviceModel}
+        { provide: getModelToken(Device.name), useValue: deviceModel },
       ],
     }).compile();
     app = testingModule.createNestApplication();
     await app.init();
-    deviceController = testingModule.get<DeviceController>(DeviceController);
+    testingModule.get<DeviceController>(DeviceController);
   });
 
   afterAll(async () => {
@@ -48,16 +47,14 @@ describe("DeviceController", () => {
   });
 
   describe('Devices', () => {
-
     it('/device (GET)', async () => {
       const test = await request(app.getHttpServer())
         .get('/device')
-        .expect(200)
-        expect(test.body.devices).toBeDefined();
-        expect(test.body.message).toBe(Constants.API_RESPONSE_MESSAGES.DEVICES_FOUND_SUCCESSFULLY);
-
+        .expect(200);
+      expect(test.body.devices).toBeDefined();
+      expect(test.body.message).toBe(
+        Constants.API_RESPONSE_MESSAGES.DEVICES_FOUND_SUCCESSFULLY,
+      );
     });
-
   });
-
 });

@@ -1,15 +1,14 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { MongoMemoryServer } from "mongodb-memory-server";
-import { Connection, connect, Model } from "mongoose";
-import { getModelToken } from "@nestjs/mongoose";
-import { Gateway, GatewaySchema } from "./entities/gateway.entity";
-import { GatewayService } from "./gateway.service";
-import { INestApplication } from "@nestjs/common";
-import { Device, DeviceSchema } from "../device/entities/device.entity";
-import { DeviceService } from "../device/device.service";
+import { Test, TestingModule } from '@nestjs/testing';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection, connect, Model } from 'mongoose';
+import { getModelToken } from '@nestjs/mongoose';
+import { Gateway, GatewaySchema } from './entities/gateway.entity';
+import { GatewayService } from './gateway.service';
+import { INestApplication } from '@nestjs/common';
+import { Device, DeviceSchema } from '../device/entities/device.entity';
+import { DeviceService } from '../device/device.service';
 
-
-describe("GatewayService", () => {
+describe('GatewayService', () => {
   let gatewayService: GatewayService;
   let mongod: MongoMemoryServer;
   let mongoConnection: Connection;
@@ -26,9 +25,9 @@ describe("GatewayService", () => {
     const testingModule: TestingModule = await Test.createTestingModule({
       providers: [
         GatewayService,
-        {provide: getModelToken(Gateway.name), useValue: gatewayModel},
+        { provide: getModelToken(Gateway.name), useValue: gatewayModel },
         DeviceService,
-        {provide: getModelToken(Device.name), useValue: deviceModel},
+        { provide: getModelToken(Device.name), useValue: deviceModel },
       ],
     }).compile();
     app = testingModule.createNestApplication();
@@ -53,6 +52,4 @@ describe("GatewayService", () => {
   it('should be defined', () => {
     expect(gatewayService).toBeDefined();
   });
-
-
 });

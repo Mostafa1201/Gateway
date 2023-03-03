@@ -10,29 +10,38 @@ import { Gateway } from './entities/gateway.entity';
 @Injectable()
 export class GatewayService {
   constructor(
-    @InjectModel(Gateway.name) private gatewayModel:Model<IGateway>,
-    private readonly deviceService: DeviceService
+    @InjectModel(Gateway.name) private gatewayModel: Model<IGateway>,
+    private readonly deviceService: DeviceService,
   ) {}
-  
-  async createGateway(createGatewayDto: CreateGatewayDto) : Promise<IGateway>{
+
+  async createGateway(createGatewayDto: CreateGatewayDto): Promise<IGateway> {
     const gateway = await new this.gatewayModel(createGatewayDto);
     return gateway.save();
   }
 
-  async getAllGateways() : Promise<IGateway[]> {
+  async getAllGateways(): Promise<IGateway[]> {
     return await this.gatewayModel.find().populate('devices');
   }
 
   async getGateway(gatewayId: string): Promise<IGateway> {
-    const gateway = await this.gatewayModel.findById(gatewayId).populate('devices');
+    const gateway = await this.gatewayModel
+      .findById(gatewayId)
+      .populate('devices');
     if (!gateway) {
-     throw new NotFoundException(`Gateway #${gatewayId} not found`);
+      throw new NotFoundException(`Gateway #${gatewayId} not found`);
     }
     return gateway;
   }
 
-  async updateGateway(gatewayId: string, updateGatewayDto: UpdateGatewayDto) : Promise<IGateway> {
-    const gateway = await this.gatewayModel.findByIdAndUpdate(gatewayId, updateGatewayDto, { new: true });
+  async updateGateway(
+    gatewayId: string,
+    updateGatewayDto: UpdateGatewayDto,
+  ): Promise<IGateway> {
+    const gateway = await this.gatewayModel.findByIdAndUpdate(
+      gatewayId,
+      updateGatewayDto,
+      { new: true },
+    );
     if (!gateway) {
       throw new NotFoundException(`Gateway #${gatewayId} not found`);
     }
@@ -40,8 +49,7 @@ export class GatewayService {
   }
 
   async deleteGateway(gatewayId: string): Promise<IGateway> {
-    const deletedGateway = await this.gatewayModel
-      .findByIdAndDelete(gatewayId);
+    const deletedGateway = await this.gatewayModel.findByIdAndDelete(gatewayId);
 
     if (!deletedGateway) {
       throw new NotFoundException(`Gateway #${gatewayId} not found`);

@@ -1,15 +1,14 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { MongoMemoryServer } from "mongodb-memory-server";
-import { Connection, connect, Model } from "mongoose";
-import { getModelToken } from "@nestjs/mongoose";
-import { INestApplication } from "@nestjs/common";
-import { Device, DeviceSchema } from "../device/entities/device.entity";
-import { DeviceService } from "../device/device.service";
-import { GatewayService } from "../gateway/gateway.service";
-import { Gateway, GatewaySchema } from "../gateway/entities/gateway.entity";
+import { Test, TestingModule } from '@nestjs/testing';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Connection, connect, Model } from 'mongoose';
+import { getModelToken } from '@nestjs/mongoose';
+import { INestApplication } from '@nestjs/common';
+import { Device, DeviceSchema } from '../device/entities/device.entity';
+import { DeviceService } from '../device/device.service';
+import { GatewayService } from '../gateway/gateway.service';
+import { Gateway, GatewaySchema } from '../gateway/entities/gateway.entity';
 
-
-describe("DeviceService", () => {
+describe('DeviceService', () => {
   let gatewayService: GatewayService;
   let deviceService: DeviceService;
   let mongod: MongoMemoryServer;
@@ -27,9 +26,9 @@ describe("DeviceService", () => {
     const testingModule: TestingModule = await Test.createTestingModule({
       providers: [
         GatewayService,
-        {provide: getModelToken(Gateway.name), useValue: gatewayModel},
+        { provide: getModelToken(Gateway.name), useValue: gatewayModel },
         DeviceService,
-        {provide: getModelToken(Device.name), useValue: deviceModel}
+        { provide: getModelToken(Device.name), useValue: deviceModel },
       ],
     }).compile();
     app = testingModule.createNestApplication();
@@ -58,26 +57,43 @@ describe("DeviceService", () => {
 
   describe('create a device', () => {
     it('should create a device successfully', async () => {
-      const gateway = await gatewayService.createGateway({name: 'Gateway 1',ipv4: '192.168.1.1'});
-      const device = await deviceService.createDevice({vendor: `Device #0`,status: 'online' });
-      await deviceService.addDeviceToGateway({ deviceId: device._id , gatewayId: gateway._id });
+      const gateway = await gatewayService.createGateway({
+        name: 'Gateway 1',
+        ipv4: '192.168.1.1',
+      });
+      const device = await deviceService.createDevice({
+        vendor: `Device #0`,
+        status: 'online',
+      });
+      await deviceService.addDeviceToGateway({
+        deviceId: device._id,
+        gatewayId: gateway._id,
+      });
       expect(200);
     });
 
     it('should fail to create a device - limit exceeded', async () => {
       try {
-        let gateway = await gatewayService.createGateway({name: 'Gateway 2',ipv4: '192.168.1.2'});
-        for(let i=0;i<20;i++){
-          let device = await deviceService.createDevice({vendor: `Device #${i+1}`,status: 'online' });
-          await deviceService.addDeviceToGateway({ deviceId: device._id , gatewayId: gateway._id });
+        const gateway = await gatewayService.createGateway({
+          name: 'Gateway 2',
+          ipv4: '192.168.1.2',
+        });
+        for (let i = 0; i < 20; i++) {
+          const device = await deviceService.createDevice({
+            vendor: `Device #${i + 1}`,
+            status: 'online',
+          });
+          await deviceService.addDeviceToGateway({
+            deviceId: device._id,
+            gatewayId: gateway._id,
+          });
         }
         expect(true).toBe(false);
       } catch (error) {
-
-        expect(error.message).toBe("Device limit exceeded , Only 10 peripheral devices are allowed for a gateway");
+        expect(error.message).toBe(
+          'Device limit exceeded , Only 10 peripheral devices are allowed for a gateway',
+        );
       }
     });
   });
-
-
 });
