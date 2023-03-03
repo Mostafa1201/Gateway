@@ -1,5 +1,5 @@
-name: Development
-
+name: Backend
+redirects: './backend'
 on:
   push:
     branches: [master]
